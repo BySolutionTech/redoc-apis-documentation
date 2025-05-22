@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentação API - ReDoc</title>
+  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: white;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #redoc-container {
+      height: calc(100vh - 50px);
+      width: 100vw;
+    }
+    #selector {
+      height: 50px;
+      background: #695099;
+      padding: 10px;
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+    #selector select {
+      margin-left: 10px;
+      font-size: 16px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="selector">
+    Selecione uma API:
+    <select id="api-selector">
+      <option value="http://localhost:8080/openapi.json">Aplicacao de teste</option>
+      <option value="https://petstore.swagger.io/v2/swagger.json">PetStore</option>
+    </select>
+  </div>
+
+  <div id="redoc-container"></div>
+
+  <script>
+    const container = document.getElementById('redoc-container');
+    const selector = document.getElementById('api-selector');
+
+    function loadRedoc(url) {
+      container.innerHTML = '';
+      Redoc.init(
+        url,
+        {
+          scrollYOffset: 50,
+          hideDownloadButton: false,
+          theme: {
+            colors: {
+              primary: { main: '#695099' },
+              background: {
+                default: '#695099',
+                rightPanel: '#695099'
+              },
+            },
+            rightPanel: {
+              backgroundColor: '#695099',
+              textColor: '#ffffff'
+            }
+          }
+        },
+        container
+      );
+    }
+
+    selector.addEventListener('change', () => {
+      loadRedoc(selector.value);
+    });
+
+    loadRedoc(selector.value);
+  </script>
+</body>
+</html>
